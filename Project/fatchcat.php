@@ -11,20 +11,18 @@
 include 'maindashboard.php';
 include 'conn.php'; // make sure this contains your DB connection code
 
-$sql = "SELECT * FROM alluser";
+$sql = "SELECT * FROM categories";
 $result = mysqli_query($connection, $sql);
 ?>
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-8 offset-md-3">
-            <h1 class="mb-4">All User Data</h1>
+            <h1 class="mb-4">All Category</h1>
             <table class="table table-bordered table-striped">
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -33,24 +31,16 @@ $result = mysqli_query($connection, $sql);
                    
 
                   foreach($result as $row){
-                      $role = ($row['role'] === 'admin')?"<button class='btn btn-success'>Admin</button>":"<button class='btn btn-warning'>User</button>";
-
-         if ($row['role'] === 'admin') {
-        $deleteBtn = "<i class='fa-solid fa-trash text-danger' style='cursor:not-allowed;'></i>";
-    } else {
-        $deleteBtn = "<a href='del.php?id={$row['id']}' class='text-danger'>
-                        <i class='fa-solid fa-trash'></i>
-                      </a>";
-    }
+                    
                       echo "<tr>
                                     <td>{$row['id']}</td>
                                     <td>{$row['name']}</td>
-                                    <td>{$row['mail']}</td>
-                                    <td>$role</td>
                                     <td>
-                                    <a href='updateuser.php?id={$row['id']}'><i class='fa-solid fa-user-pen text-success'></i></a> ||
-{$deleteBtn}
-                                    
+                                    <a href='updatecat.php?id={$row['id']}'><i class='fa-solid fa-user-pen text-success'></i></a> ||
+
+                                    <a href='delcat.php?id={$row['id']}' class='text-danger'>
+                        <i class='fa-solid fa-trash'></i>
+                      </a>
                                     </td>
                                   </tr>";
                   }

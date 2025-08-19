@@ -11,7 +11,9 @@
 include 'maindashboard.php';
 include 'conn.php'; // make sure this contains your DB connection code
 
-$sql = "SELECT * FROM alluser";
+$sql = "SELECT p.id, p.name, p.price, p.description, p.quantity, p.image, c.name as categories
+          FROM products p 
+          INNER JOIN categories c ON p.cat_id = c.id";
 $result = mysqli_query($connection, $sql);
 ?>
 <div class="container mt-4">
@@ -23,8 +25,11 @@ $result = mysqli_query($connection, $sql);
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
+                        <th>desc</th>
+                        <th>price</th>
+                        <th>Quantity</th>
+                        <th>Pic</th>
+                        <th>Category</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -33,23 +38,18 @@ $result = mysqli_query($connection, $sql);
                    
 
                   foreach($result as $row){
-                      $role = ($row['role'] === 'admin')?"<button class='btn btn-success'>Admin</button>":"<button class='btn btn-warning'>User</button>";
-
-         if ($row['role'] === 'admin') {
-        $deleteBtn = "<i class='fa-solid fa-trash text-danger' style='cursor:not-allowed;'></i>";
-    } else {
-        $deleteBtn = "<a href='del.php?id={$row['id']}' class='text-danger'>
-                        <i class='fa-solid fa-trash'></i>
-                      </a>";
-    }
                       echo "<tr>
                                     <td>{$row['id']}</td>
                                     <td>{$row['name']}</td>
-                                    <td>{$row['mail']}</td>
-                                    <td>$role</td>
+                                    <td>{$row['description']}</td>
+                                    <td>{$row['price']}</td>
+                                    <td>{$row['quantity']}</td>
+                                    <td><img src='upload/{$row['image']}' height='100px' width='100px'></td>
+                                    <td>{$row['categories']}</td>
+                                    
                                     <td>
                                     <a href='updateuser.php?id={$row['id']}'><i class='fa-solid fa-user-pen text-success'></i></a> ||
-{$deleteBtn}
+
                                     
                                     </td>
                                   </tr>";

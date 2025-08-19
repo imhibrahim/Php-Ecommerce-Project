@@ -33,7 +33,7 @@ if (isset($_POST['login'])) {
     $mail = $_POST['mail'];
     $password = $_POST['password'];
 
-    $query = "SELECT * FROM allusers WHERE mail = '{$mail}' AND password = '{$password}'";
+    $query = "SELECT * FROM alluser WHERE mail = '{$mail}' AND password = '{$password}'";
     $result = mysqli_query($connection, $query);
 
     if ($result && mysqli_num_rows($result) == 1) {

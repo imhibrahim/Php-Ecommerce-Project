@@ -1,3 +1,11 @@
+<?php
+include 'conn.php';
+$id=$_GET['id'];
+
+$result=mysqli_query($connection,"select * from categories where id= {$id}");
+$category = mysqli_fetch_assoc($result);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,12 +20,12 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5 offset-3 mt-5 text-center">
-            <h1>Register Form</h1>
+            <h1>Update Category</h1>
             <form action="#" method="post">
-<input type="text" placeholder="enter name" name="name" class="form-control mt-3">
-<input type="text" placeholder="enter mail" name="mail" class="form-control mt-3">
-<input type="text" placeholder="enter password" name="password" class="form-control mt-3">
-<button class="btn btn-info mt-5" name="register">Register</button>
+<input type="hidden"  name="id"  value=<?php echo $category['id']?>>
+<input type="text" placeholder="enter name" name="name" class="form-control mt-3" value=<?php echo $category['name']?>>
+
+<button class="btn btn-info mt-5" name="update">Update</button>
 
 
             </form>
@@ -27,19 +35,21 @@
 </body>
 </html>
 
-
 <?php
-include 'conn.php';
-if(isset($_POST['register'])){
+
+if(isset($_POST['update'])){
+
     $name=$_POST['name'];
-$mail=$_POST['mail'];
-$password=$_POST['password'];
-$result=mysqli_query($connection,"insert into alluser(name,mail,password) values('{$name}','{$mail}','{$password}')");
+$catid=$_POST['id'];
+
+$query="UPDATE `categories` SET `name`='{$name}' WHERE id ={$catid}";
+
+$result=mysqli_query($connection,$query);
 if($result){
-    header('location:login.php');
+    header('location:fatchcat.php');
 }
 else{
-    header("location:register.php");
+    header("location:fatchcat.php");
 }
 }
 ?>
